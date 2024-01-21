@@ -157,6 +157,8 @@ dependencies {
     // Houses the core logic for charts and other elements. Included in all other modules.
     implementation("com.patrykandpatrick.vico:core:1.13.1")
 
+    // Collapsing Toolbar
+    implementation("me.onebone:toolbar-compose:2.3.5")
 
 
     // SystemUIController
