@@ -53,6 +53,7 @@ import com.patrykandpatrick.vico.core.chart.composed.plus
 import com.patrykandpatrick.vico.core.entry.composed.ComposedChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.entriesOf
 import dagger.hilt.android.AndroidEntryPoint
+import quiz.genai.com.home.HomeScreen
 import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
 import quiz.genai.com.ui.theme.monte
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    HomeScreen()
 //                    val composedChartEntryModelProducer = ComposedChartEntryModelProducer.build {
 //                        add(entriesOf(4f, 12f, 8f, 16f))
 //                        add(entriesOf(16f, 8f, 12f, 4f))
@@ -86,47 +88,47 @@ class MainActivity : ComponentActivity() {
 
 
 
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Box(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp), contentAlignment = Alignment.Center) {
-                            RotatedSkillsCard(
-                                modifier = Modifier
-                                    .graphicsLayer(
-                                        rotationZ = 348f,
-                                        transformOrigin = TransformOrigin(
-                                            pivotFractionX = 0f, // Set pivot at the left-most border
-                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-                                        )
-                                    ),
-                                color = Color(0xFFF5F378).copy(0.85f)
-                            )
-                            RotatedSkillsCard(
-                                modifier = Modifier
-                                    .graphicsLayer(
-                                        rotationZ = 354f,
-                                        transformOrigin = TransformOrigin(
-                                            pivotFractionX = 0f, // Set pivot at the left-most border
-                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-                                        )
-                                    ),
-                                color = Color(0xFFDCC1FF).copy(0.85f)
-
-                            )
-                            SkillsCard(
-                                modifier = Modifier
-                                    .graphicsLayer(
-                                        rotationZ = 0f, // No rotation for the third card
-                                        transformOrigin = TransformOrigin(
-                                            pivotFractionX = 0f, // Set pivot at the left-most border
-                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-                                        )
-                                    )
-                            )
-                        }
-                    }
+//                    Column(
+//                        modifier = Modifier.fillMaxSize(),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Box(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp), contentAlignment = Alignment.Center) {
+//                            RotatedSkillsCard(
+//                                modifier = Modifier
+//                                    .graphicsLayer(
+//                                        rotationZ = 348f,
+//                                        transformOrigin = TransformOrigin(
+//                                            pivotFractionX = 0f, // Set pivot at the left-most border
+//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
+//                                        )
+//                                    ),
+//                                color = Color(0xFFF5F378).copy(0.85f)
+//                            )
+//                            RotatedSkillsCard(
+//                                modifier = Modifier
+//                                    .graphicsLayer(
+//                                        rotationZ = 354f,
+//                                        transformOrigin = TransformOrigin(
+//                                            pivotFractionX = 0f, // Set pivot at the left-most border
+//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
+//                                        )
+//                                    ),
+//                                color = Color(0xFFDCC1FF).copy(0.85f)
+//
+//                            )
+//                            SkillsCard(
+//                                modifier = Modifier
+//                                    .graphicsLayer(
+//                                        rotationZ = 0f, // No rotation for the third card
+//                                        transformOrigin = TransformOrigin(
+//                                            pivotFractionX = 0f, // Set pivot at the left-most border
+//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
+//                                        )
+//                                    )
+//                            )
+//                        }
+//                    }
 //                    val viewModel: QuizViewModel = hiltViewModel()
 //                    DemoQuiz(viewModel = viewModel)
                 }
