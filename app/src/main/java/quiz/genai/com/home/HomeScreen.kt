@@ -1,7 +1,9 @@
 package quiz.genai.com.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,10 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import quiz.genai.com.R
+import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.ui.theme.backGround
 import quiz.genai.com.ui.theme.indigo
 import quiz.genai.com.ui.theme.monteEB
@@ -36,12 +41,12 @@ import quiz.genai.com.ui.theme.yellow
 import quiz.genai.com.utils.ProfileImage
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(time: Long, timeTracker: TimeTracker) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp, top = 20.dp)
             .background(backGround)
+            .padding(start = 10.dp, end = 10.dp, top = 20.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Row(
@@ -58,6 +63,7 @@ fun HomeScreen() {
                 ProfileImage(
                     imageUrl = R.drawable.memoji,
                     modifier = Modifier
+                        .padding(end = 5.dp)
                         .size(70.dp)
                         .border(
                             width = 1.dp,
@@ -91,6 +97,15 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
+            text = "Hello, $time",
+            color = indigo,
+            fontFamily = monteEB,
+            fontSize = 17.sp
+        )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Text(
             text = "Courses",
             color = textColor,
             fontFamily = monteEB,
@@ -117,6 +132,53 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(5.dp))
 
         CoursesChips()
+
+        LearningGoalsSection(timeTracker = timeTracker)
+
+        val lastTextColor = if (isSystemInDarkTheme()) Color.White else Color.Black
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.skills),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(130.dp),
+                colorFilter = ColorFilter.lighting(
+                    Color(0xFF927DFF),
+                    Color(0xFFE6E5F0)
+                ),
+                alpha = 0.5f
+            )
+            Spacer(modifier = Modifier.height(25.dp))
+            Text(
+                text = "Elevate yourself",
+                color = lastTextColor.copy(0.75f),
+                fontSize = 24.sp,
+                fontFamily = monteEB,
+            )
+            Spacer(modifier = Modifier.height(0.dp))
+            Text(
+                text = "with Continuous Learning",
+                color = lastTextColor.copy(0.5f),
+                fontSize = 12.sp,
+                fontFamily = monteEB,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Crafted with ❤️ by The Centennials",
+                color = lastTextColor.copy(0.75f),
+                fontSize = 10.sp,
+                fontFamily = monteEB,
+            )
+        }
+
+        Spacer(modifier = Modifier.size(80.dp))
+
 
     }
 }

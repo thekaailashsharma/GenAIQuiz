@@ -53,6 +53,7 @@ import com.patrykandpatrick.vico.core.chart.composed.plus
 import com.patrykandpatrick.vico.core.entry.composed.ComposedChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.entriesOf
 import dagger.hilt.android.AndroidEntryPoint
+import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
 import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
@@ -61,17 +62,26 @@ import quiz.genai.com.ui.theme.monteEB
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private lateinit var timeTracker: TimeTracker
     @OptIn(ExperimentalUnitApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        timeTracker = TimeTracker(this)
+        // Attach TimeTracker to the activity's lifecycle
+        timeTracker.attachToLifecycle(lifecycle)
+        timeTracker.startTracking()
         super.onCreate(savedInstanceState)
         setContent {
+            val totalTime = remember { timeTracker.getTotalTimeSpent() }
             TryGenAIQuizTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+                    HomeScreen(
+                        time = totalTime,
+                        timeTracker = timeTracker
+                    )
 //                    val composedChartEntryModelProducer = ComposedChartEntryModelProducer.build {
 //                        add(entriesOf(4f, 12f, 8f, 16f))
 //                        add(entriesOf(16f, 8f, 12f, 4f))
@@ -134,6 +144,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Start tracking time when the activity starts
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Stop tracking time when the activity pauses
+        timeTracker.stopTracking()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Stop tracking time when the activity stops
+        timeTracker.stopTracking()
     }
 }
 
