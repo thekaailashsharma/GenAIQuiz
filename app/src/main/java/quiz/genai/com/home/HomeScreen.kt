@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,7 +46,11 @@ import quiz.genai.com.ui.theme.yellow
 import quiz.genai.com.utils.ProfileImage
 
 @Composable
-fun HomeScreen(time: Long, timeTracker: TimeTracker) {
+fun HomeScreen(
+    time: Long,
+    timeTracker: TimeTracker,
+    paddingValues: PaddingValues
+) {
     val state = rememberCollapsingToolbarScaffoldState()
     val progress = state.toolbarState.progress
 
@@ -118,6 +123,7 @@ fun HomeScreen(time: Long, timeTracker: TimeTracker) {
                 .fillMaxSize()
                 .background(backGround)
                 .padding(start = 10.dp, end = 10.dp, top = 20.dp)
+                .padding(bottom = paddingValues.calculateBottomPadding())
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(10.dp))

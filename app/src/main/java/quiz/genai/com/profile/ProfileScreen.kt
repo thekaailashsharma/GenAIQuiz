@@ -51,11 +51,12 @@ import quiz.genai.com.ui.theme.yellow
 import quiz.genai.com.utils.ProfileImage
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(paddingValues: PaddingValues) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(backGround),
+            .background(backGround)
+            .padding(bottom = paddingValues.calculateBottomPadding()),
         contentPadding = PaddingValues(bottom = 0.dp)
     ) {
         item {

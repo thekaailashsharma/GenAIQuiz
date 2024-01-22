@@ -23,6 +23,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
@@ -55,6 +57,8 @@ import com.patrykandpatrick.vico.core.entry.entriesOf
 import dagger.hilt.android.AndroidEntryPoint
 import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
+import quiz.genai.com.navController.BottomBar
+import quiz.genai.com.navController.NavController
 import quiz.genai.com.profile.ProfileScreen
 import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
@@ -75,11 +79,20 @@ class MainActivity : ComponentActivity() {
             val totalTime = remember { timeTracker.getTotalTimeSpent() }
             TryGenAIQuizTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
+                val navController = rememberNavController()
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    bottomBar = {
+                        BottomBar(navController = navController)
+                    }
                 ) {
-                    ProfileScreen()
+                    println(it)
+                    NavController(
+                        navHostController = navController,
+                        paddingValues = it,
+                        time = totalTime,
+                        timeTracker = timeTracker
+                    )
 //                    HomeScreen(
 //                        time = totalTime,
 //                        timeTracker = timeTracker
