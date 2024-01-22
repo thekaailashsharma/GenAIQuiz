@@ -55,6 +55,7 @@ import com.patrykandpatrick.vico.core.entry.entriesOf
 import dagger.hilt.android.AndroidEntryPoint
 import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
+import quiz.genai.com.profile.ProfileScreen
 import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
 import quiz.genai.com.ui.theme.monte
@@ -78,10 +79,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(
-                        time = totalTime,
-                        timeTracker = timeTracker
-                    )
+                    ProfileScreen()
+//                    HomeScreen(
+//                        time = totalTime,
+//                        timeTracker = timeTracker
+//                    )
 //                    val composedChartEntryModelProducer = ComposedChartEntryModelProducer.build {
 //                        add(entriesOf(4f, 12f, 8f, 16f))
 //                        add(entriesOf(16f, 8f, 12f, 4f))
@@ -98,47 +100,6 @@ class MainActivity : ComponentActivity() {
 
 
 
-//                    Column(
-//                        modifier = Modifier.fillMaxSize(),
-//                        horizontalAlignment = Alignment.CenterHorizontally,
-//                        verticalArrangement = Arrangement.Center
-//                    ) {
-//                        Box(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp), contentAlignment = Alignment.Center) {
-//                            RotatedSkillsCard(
-//                                modifier = Modifier
-//                                    .graphicsLayer(
-//                                        rotationZ = 348f,
-//                                        transformOrigin = TransformOrigin(
-//                                            pivotFractionX = 0f, // Set pivot at the left-most border
-//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-//                                        )
-//                                    ),
-//                                color = Color(0xFFF5F378).copy(0.85f)
-//                            )
-//                            RotatedSkillsCard(
-//                                modifier = Modifier
-//                                    .graphicsLayer(
-//                                        rotationZ = 354f,
-//                                        transformOrigin = TransformOrigin(
-//                                            pivotFractionX = 0f, // Set pivot at the left-most border
-//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-//                                        )
-//                                    ),
-//                                color = Color(0xFFDCC1FF).copy(0.85f)
-//
-//                            )
-//                            SkillsCard(
-//                                modifier = Modifier
-//                                    .graphicsLayer(
-//                                        rotationZ = 0f, // No rotation for the third card
-//                                        transformOrigin = TransformOrigin(
-//                                            pivotFractionX = 0f, // Set pivot at the left-most border
-//                                            pivotFractionY = 1f // Set pivot at the bottom-left corner
-//                                        )
-//                                    )
-//                            )
-//                        }
-//                    }
 //                    val viewModel: QuizViewModel = hiltViewModel()
 //                    DemoQuiz(viewModel = viewModel)
                 }
@@ -165,192 +126,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun SkillsCard(modifier: Modifier = Modifier) {
-    Card(colors = CardDefaults.cardColors(
-        containerColor = Color.Transparent,
-    ), border = BorderStroke(1.dp, Color(0xFF454164)),
-        modifier = modifier
-            .fillMaxWidth()
-            .height(250.dp)
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.skills),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(130.dp)
-                    .align(Alignment.Center),
-                colorFilter = ColorFilter.lighting(
-                    Color(0xFF927DFF),
-                    Color(0xFFE6E5F0)
-                ))
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(appGradient),
-
-                ) {
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Skills Card",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontFamily = monteEB,
-                        fontWeight = FontWeight.Normal,
-
-                    )
-                    Icon(
-                        painter = painterResource(R.drawable.nfc_icon),
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .size(44.dp)
-                            .padding(end = 10.dp)
-                    )
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.memoji),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(100.dp)
-                            .offset(y = (-15).dp)
-                            .padding(end = 10.dp),
-                        contentScale = androidx.compose.ui.layout.ContentScale.Crop,
-                        alpha = 1f,
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Vaishnava Pingale",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontFamily = monteEB,
-                        fontWeight = FontWeight.ExtraBold,
-                    )
-
-                    Icon(
-                        painter = painterResource(R.drawable.signature),
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .padding(end = 20.dp)
-                            .size(44.dp)
-                            .padding(end = 10.dp)
-                    )
-                }
 
 
-            }
-        }
-
-    }
-}
-
-@Composable
-fun RotatedSkillsCard(modifier: Modifier = Modifier, color: Color = Color(0xFF454164)) {
-    Card(colors = CardDefaults.cardColors(
-        containerColor = Color.Transparent,
-    ), border = BorderStroke(1.dp, Color(0xFF454164)),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 7.dp)
-            .height(250.dp)
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color),
-
-                ) {
-            }
-        }
-
-    }
-}
-
-@Composable
-fun RotatedSkillsCard2(modifier: Modifier = Modifier) {
-    Card(colors = CardDefaults.cardColors(
-        containerColor = Color.Transparent,
-    ), border = BorderStroke(1.dp, Color(0xFF454164)),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 7.dp)
-            .height(250.dp)
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(appGradient),
-
-                ) {
-            }
-        }
-
-    }
-}
-@Preview(showBackground = false,)
-@Composable
-fun DefaultPreview() {
-    TryGenAIQuizTheme {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp), contentAlignment = Alignment.Center) {
-                RotatedSkillsCard2(
-                    modifier = Modifier
-                        .graphicsLayer(
-                            rotationZ = 348f,
-                            transformOrigin = TransformOrigin(
-                                pivotFractionX = 0f, // Set pivot at the left-most border
-                                pivotFractionY = 1f // Set pivot at the bottom-left corner
-                            )
-                        )
-                )
-                RotatedSkillsCard2(
-                    modifier = Modifier
-                        .graphicsLayer(
-                            rotationZ = 354f,
-                            transformOrigin = TransformOrigin(
-                                pivotFractionX = 0f, // Set pivot at the left-most border
-                                pivotFractionY = 1f // Set pivot at the bottom-left corner
-                            )
-                        )
-                )
-                SkillsCard(
-                    modifier = Modifier
-                        .graphicsLayer(
-                            rotationZ = 0f, // No rotation for the third card
-                            transformOrigin = TransformOrigin(
-                                pivotFractionX = 0f, // Set pivot at the left-most border
-                                pivotFractionY = 1f // Set pivot at the bottom-left corner
-                            )
-                        )
-                )
-            }
-        }
-}
 
