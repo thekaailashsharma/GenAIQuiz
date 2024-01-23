@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -41,16 +42,6 @@ fun SkillsCard(modifier: Modifier = Modifier) {
             .height(250.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.skills),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(130.dp)
-                    .align(Alignment.Center),
-                colorFilter = ColorFilter.lighting(
-                    Color(0xFF927DFF),
-                    Color(0xFFE6E5F0)
-                ))
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -129,6 +120,19 @@ fun SkillsCard(modifier: Modifier = Modifier) {
 
 
             }
+            Image(
+                painter = painterResource(id = R.drawable.skills),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(130.dp)
+                    .align(Alignment.Center)
+                    .alpha(0.21f),
+                colorFilter = ColorFilter.lighting(
+                    Color(0xFF927DFF),
+                    Color(0xFFE6E5F0)
+                ),
+                alpha = 0.38f,
+            )
         }
 
     }

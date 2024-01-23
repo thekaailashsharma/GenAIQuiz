@@ -93,8 +93,13 @@ val dummyCompanies = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun JobsBoardingScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
+fun JobsBoardingScreen(paddingValues: PaddingValues) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backGround)
+            .padding(bottom = paddingValues.calculateBottomPadding())
+    ) {
         val screenWidth = LocalConfiguration.current.screenWidthDp
         LazyColumn(
             modifier = Modifier

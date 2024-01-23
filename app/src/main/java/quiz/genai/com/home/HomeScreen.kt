@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -56,7 +58,7 @@ fun HomeScreen(
 
     CollapsingToolbarScaffold(
         toolbar = {
-            val textSize = (14 + (30 - 18) * state.toolbarState.progress)
+            val textSize = (14 + (30 - 19) * state.toolbarState.progress)
             val imageSize = (40 + (30 - 9) * state.toolbarState.progress)
             Box(
                 modifier = Modifier
@@ -194,12 +196,13 @@ fun HomeScreen(
                     painter = painterResource(id = R.drawable.skills),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(130.dp),
+                        .size(130.dp)
+                        .alpha(0.45f),
                     colorFilter = ColorFilter.lighting(
                         Color(0xFF927DFF),
                         Color(0xFFE6E5F0)
                     ),
-                    alpha = 0.5f
+                    alpha = 0.25f,
                 )
                 Spacer(modifier = Modifier.height(25.dp))
                 Text(

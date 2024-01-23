@@ -172,7 +172,7 @@ fun CourseCard(course: Course) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.TopEnd)
-                    .offset(y = (-5).dp)
+                    .offset(y = (-15).dp)
                     .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null,
@@ -186,8 +186,9 @@ fun CourseCard(course: Course) {
                     imageVector = if (isBookMarked) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
                     contentDescription = null,
                     modifier = Modifier
-                        .width(33.dp),
-                    tint = if (isBookMarked) Color(0xFFFF5722).copy(0.8f)
+                        .width(33.dp)
+                        .height(48.dp),
+                    tint = if (isBookMarked) Color(0xFFed2c2c).copy(1f)
                     else Color.Black.copy(alpha = 0.6f)
                 )
             }

@@ -115,7 +115,7 @@ fun GroupedBadgesCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 7.dp)
-                        .height(250.dp)
+                        .height(200.dp)
                 ) {
                     Column(
                         modifier = Modifier

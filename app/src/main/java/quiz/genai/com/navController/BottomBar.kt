@@ -21,6 +21,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -44,21 +45,21 @@ fun BottomBar(
         val currentRoute = navBackStackEntry?.destination
         Card(
             modifier = Modifier
-                .padding(start = 25.dp, end = 25.dp, bottom = 15.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(start = 25.dp, end = 25.dp, bottom = 15.dp),
             colors = CardDefaults.cardColors(
-                containerColor = lightGray.copy(0.3f),
+                containerColor = Color.Transparent,
                 contentColor = textColor
             ),
             elevation = CardDefaults.cardElevation(0.dp),
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(40.dp),
             border = BorderStroke(1.dp, color = lightGray)
         ) {
             Divider(thickness = 1.dp, color = textColor.copy(0.5f))
             NavigationBar(
                 modifier = Modifier
-                    .height(80.dp),
-                containerColor = lightGray.copy(0.3f),
+                    .height(60.dp),
+                containerColor = Color.Transparent,
                 tonalElevation = 0.dp,
             ) {
                 items.forEach {

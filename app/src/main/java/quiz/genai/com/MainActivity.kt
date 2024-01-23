@@ -27,7 +27,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -45,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
 import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
@@ -59,6 +63,7 @@ import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
 import quiz.genai.com.navController.BottomBar
 import quiz.genai.com.navController.NavController
+import quiz.genai.com.navController.Screens
 import quiz.genai.com.profile.ProfileScreen
 import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
@@ -77,23 +82,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val totalTime = remember { timeTracker.getTotalTimeSpent() }
+            val navBackStackEntry by rememberNavController().currentBackStackEntryAsState()
+            var isBottomBarVisible = remember { mutableStateOf(true) }
+            when (navBackStackEntry?.destination?.route) {
+                Screens.HomeScreen.route -> {
+                    isBottomBarVisible.value = true
+                }
+                Screens.Profile.route -> {
+                    isBottomBarVisible.value = true
+                }
+                Screens.Jobs.route -> {
+                    isBottomBarVisible.value = false
+                }
+            }
             TryGenAIQuizTheme {
                 // A surface container using the 'background' color from the theme
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-//                    bottomBar = {
-//                        BottomBar(navController = navController)
-//                    }
+                    bottomBar = {
+                        BottomBar(navController = navController, isBottomBarVisible = isBottomBarVisible)
+                    }
                 ) {
-                    JobsBoardingScreen()
+//                    JobsBoardingScreen()
                     println(it)
-//                    NavContro`ller(
-//                        navHostController = navController,
-//                        paddingValues = it,
-//                        time = totalTime,
-//                        timeTracker = timeTracker
-//                    )
+                    NavController(
+                        navHostController = navController,
+                        paddingValues = it,
+                        time = totalTime,
+                        timeTracker = timeTracker
+                    )
 //                    HomeScreen(
 //                        time = totalTime,
 //                        timeTracker = timeTracker

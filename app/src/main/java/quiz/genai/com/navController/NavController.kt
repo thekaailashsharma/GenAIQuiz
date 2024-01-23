@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import quiz.genai.com.JobsBoardingScreen
 import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
 import quiz.genai.com.profile.ProfileScreen
@@ -29,6 +30,10 @@ fun NavController(
         }
         composable(Screens.Profile.route) {
             ProfileScreen(paddingValues)
+        }
+
+        composable(Screens.Jobs.route) {
+            JobsBoardingScreen(paddingValues)
         }
     }
 }
