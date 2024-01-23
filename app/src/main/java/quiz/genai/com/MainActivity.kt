@@ -82,17 +82,18 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        BottomBar(navController = navController)
-                    }
+//                    bottomBar = {
+//                        BottomBar(navController = navController)
+//                    }
                 ) {
+                    JobsBoardingScreen()
                     println(it)
-                    NavController(
-                        navHostController = navController,
-                        paddingValues = it,
-                        time = totalTime,
-                        timeTracker = timeTracker
-                    )
+//                    NavContro`ller(
+//                        navHostController = navController,
+//                        paddingValues = it,
+//                        time = totalTime,
+//                        timeTracker = timeTracker
+//                    )
 //                    HomeScreen(
 //                        time = totalTime,
 //                        timeTracker = timeTracker
