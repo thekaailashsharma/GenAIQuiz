@@ -1,5 +1,6 @@
 package quiz.genai.com.utils
 
+import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +38,8 @@ import quiz.genai.com.ui.theme.monte
 import quiz.genai.com.ui.theme.monteEB
 import quiz.genai.com.ui.theme.textColor
 import java.time.LocalDate
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ArcComposable(
@@ -140,10 +143,9 @@ fun millisToMinutesSeconds(millis: Long): String {
     if (millis < 0) {
         throw IllegalArgumentException("Input time must be non-negative.")
     }
-
-    val totalSeconds = millis / 1000
-    val minutes = totalSeconds / 60
-    val hours = minutes / 60
+    println("millis: $millis")
+    val hours = millis / (1000 * 60 * 60)
+    val minutes = (millis % (1000 * 60 * 60)) / (1000 * 60)
 
     return String.format("%02d:%02d", hours, minutes)
 }
