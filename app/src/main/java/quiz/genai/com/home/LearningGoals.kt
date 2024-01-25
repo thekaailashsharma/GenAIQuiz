@@ -31,26 +31,26 @@ import quiz.genai.com.ui.theme.monteEB
 import quiz.genai.com.ui.theme.textColor
 import quiz.genai.com.utils.ArcComposable
 import quiz.genai.com.utils.Progress
+import quiz.genai.com.utils.calculateProgress
+import quiz.genai.com.utils.millisToMinutesSeconds
+import java.time.LocalDate
 
 @Composable
-fun LearningGoalsSection(timeTracker: TimeTracker) {
+fun LearningGoalsSection(timeTracker: TimeTracker, totalTime: Long) {
     Column(verticalArrangement = Arrangement.Center) {
         Spacer(modifier = Modifier.height(30.dp))
         var animStart by remember {
-            mutableStateOf(false)
+            mutableStateOf(true)
         }
-        val totalTime = remember {
-            timeTracker.getTotalTimeSpent()
+        val progress = remember {
+            calculateProgress(totalTime,  30 * 60 * 1000)
         }
-        val animatedProgress by animateFloatAsState(
-            targetValue = if (animStart) 0f else (totalTime.toFloat()) / 1000f,
-            label = "",
-            animationSpec = tween(500)
-        )
 
         LaunchedEffect(key1 = Unit) {
             animStart = true
         }
+        println("animatedProgress: $progress")
+        println("animatedProgress2: ${millisToMinutesSeconds(timeTracker.getTotalTimeSpent())}")
 
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -91,7 +91,8 @@ fun LearningGoalsSection(timeTracker: TimeTracker) {
         ) {
             ArcComposable(
                 modifier = Modifier.padding(10.dp),
-                text = "${(animatedProgress).toInt()}",
+                text = millisToMinutesSeconds(timeTracker.getTotalTimeSpent()),
+                progress = progress,
             )
         }
 

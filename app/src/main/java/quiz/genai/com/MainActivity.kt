@@ -1,5 +1,7 @@
 package quiz.genai.com
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,9 +29,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
@@ -59,6 +66,17 @@ import com.patrykandpatrick.vico.core.chart.composed.plus
 import com.patrykandpatrick.vico.core.entry.composed.ComposedChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.entriesOf
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
 import quiz.genai.com.navController.BottomBar
@@ -69,11 +87,15 @@ import quiz.genai.com.ui.theme.TryGenAIQuizTheme
 import quiz.genai.com.ui.theme.appGradient
 import quiz.genai.com.ui.theme.monte
 import quiz.genai.com.ui.theme.monteEB
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var timeTracker: TimeTracker
-    @OptIn(ExperimentalUnitApi::class)
+
+    @OptIn(ExperimentalUnitApi::class, FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         timeTracker = TimeTracker(this)
         // Attach TimeTracker to the activity's lifecycle
@@ -88,9 +110,11 @@ class MainActivity : ComponentActivity() {
                 Screens.HomeScreen.route -> {
                     isBottomBarVisible.value = true
                 }
+
                 Screens.Profile.route -> {
                     isBottomBarVisible.value = true
                 }
+
                 Screens.Jobs.route -> {
                     isBottomBarVisible.value = false
                 }
@@ -101,7 +125,10 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        BottomBar(navController = navController, isBottomBarVisible = isBottomBarVisible)
+                        BottomBar(
+                            navController = navController,
+                            isBottomBarVisible = isBottomBarVisible
+                        )
                     }
                 ) {
 //                    JobsBoardingScreen()
@@ -131,13 +158,13 @@ class MainActivity : ComponentActivity() {
 //                    )
 
 
-
 //                    val viewModel: QuizViewModel = hiltViewModel()
 //                    DemoQuiz(viewModel = viewModel)
                 }
             }
         }
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -150,10 +177,24 @@ class MainActivity : ComponentActivity() {
         timeTracker.stopTracking()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Resume tracking time when the app is in the foreground
+        timeTracker.stopTracking()
+    }
+
+
     override fun onStop() {
         super.onStop()
         // Stop tracking time when the activity stops
         timeTracker.stopTracking()
+    }
+}
+
+@OptIn(ObsoleteCoroutinesApi::class)
+fun Flow<Long>.refreshEvery(duration: Duration): Flow<Long> = flow {
+    ticker(duration.inWholeMilliseconds, duration.inWholeMilliseconds).consumeEach {
+        emit(this@refreshEvery.first())
     }
 }
 

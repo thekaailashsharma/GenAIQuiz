@@ -6,6 +6,8 @@ import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class TimeTracker(private val context: Context) : LifecycleObserver {
 
@@ -13,6 +15,9 @@ class TimeTracker(private val context: Context) : LifecycleObserver {
         context.getSharedPreferences("TimeTrackerPrefs", Context.MODE_PRIVATE)
 
     private var startTime: Long = 0
+
+    private val _totalTimeSpentFlow = MutableStateFlow(getTotalTimeSpent())
+    val totalTimeSpentFlow: Flow<Long> get() = _totalTimeSpentFlow
 
     init {
         // Initialize the start time
@@ -39,6 +44,9 @@ class TimeTracker(private val context: Context) : LifecycleObserver {
         sharedPreferences.edit {
             putLong(KEY_TOTAL_TIME_SPENT, totalTimeSpent)
         }
+
+        // Update the Flow with the new total time spent
+        _totalTimeSpentFlow.value = totalTimeSpent
     }
 
     // Get the total time spent
@@ -51,6 +59,9 @@ class TimeTracker(private val context: Context) : LifecycleObserver {
         sharedPreferences.edit {
             putLong(KEY_TOTAL_TIME_SPENT, 0)
         }
+
+        // Update the Flow with the reset value
+        _totalTimeSpentFlow.value = 0
     }
 
     // Attach the TimeTracker to a lifecycle owner (e.g., activity or fragment)
@@ -73,3 +84,5 @@ class TimeTracker(private val context: Context) : LifecycleObserver {
         private const val KEY_TOTAL_TIME_SPENT = "total_time_spent"
     }
 }
+
+

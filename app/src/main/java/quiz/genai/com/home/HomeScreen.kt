@@ -144,14 +144,6 @@ fun HomeScreen(
             TopicsChip(topics = dummyTopics)
 
             Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = "Hello, $time",
-                color = indigo,
-                fontFamily = monteEB,
-                fontSize = 17.sp
-            )
-
             Spacer(modifier = Modifier.width(4.dp))
 
             Text(
@@ -182,7 +174,7 @@ fun HomeScreen(
 
             CoursesChips()
 
-            LearningGoalsSection(timeTracker = timeTracker)
+            LearningGoalsSection(timeTracker = timeTracker, totalTime = time)
 
             val lastTextColor = if (isSystemInDarkTheme()) Color.White else Color.Black
 

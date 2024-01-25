@@ -50,14 +50,14 @@ val dummyWeeklyGoals = listOf(
         DailyData(
             WeekDays.Tuesday,
             150,
-            100,
+            160,
         )
     ),
     WeeklyGoals(
         DailyData(
             WeekDays.Wednesday,
             150,
-            100,
+            160,
         )
     ),
     WeeklyGoals(

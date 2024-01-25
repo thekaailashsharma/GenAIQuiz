@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import quiz.genai.com.home.DailyData
 import quiz.genai.com.home.dummyWeeklyGoals
 import quiz.genai.com.home.isDayOfWeekAfterToday
 import quiz.genai.com.home.isGoalAchieved
@@ -84,17 +85,17 @@ fun ArcComposable(
         ) {
             Text(
                 text = "Today's Progress",
-                color = Color.Gray,
-                fontSize = 20.sp,
+                color = textColor.copy(0.75f),
+                fontSize = 15.sp,
                 fontFamily = monte,
                 modifier = Modifier.offset(y = (-20).dp),
                 fontWeight = androidx.compose.ui.text.font.FontWeight.ExtraBold,
             )
             Spacer(modifier = Modifier.size(5.dp))
             Text(
-                text = "0:00",
+                text = text,
                 color = textColor,
-                fontSize = 20.sp,
+                fontSize = 33.sp,
                 fontFamily = monteEB,
                 softWrap = true,
                 modifier = Modifier.offset(y = (-20).dp)
@@ -102,8 +103,8 @@ fun ArcComposable(
             Spacer(modifier = Modifier.size(5.dp))
             Text(
                 text = "of your 30-minute goal",
-                color = Color.Gray,
-                fontSize = 20.sp,
+                color = textColor.copy(0.75f),
+                fontSize = 15.sp,
                 fontFamily = monte,
                 softWrap = true,
                 modifier = Modifier.offset(y = (-20).dp),
@@ -113,6 +114,42 @@ fun ArcComposable(
         }
     }
 }
+
+
+fun calculateProgress(currentProgress: Long, setGoal: Long): Float {
+    if (setGoal <= 0) {
+        throw IllegalArgumentException("Goal must be greater than 0.")
+    }
+
+    val progressPercentage = if (currentProgress >= 0) {
+        currentProgress.toFloat() / setGoal.toFloat()
+    } else {
+        0f
+    }
+
+    println("progressPercentage: $progressPercentage")
+
+    return when {
+        progressPercentage < 0 -> 0f
+        progressPercentage > 1 -> 1f
+        else -> progressPercentage
+    }
+}
+
+fun millisToMinutesSeconds(millis: Long): String {
+    if (millis < 0) {
+        throw IllegalArgumentException("Input time must be non-negative.")
+    }
+
+    val totalSeconds = millis / 1000
+    val minutes = totalSeconds / 60
+    val hours = minutes / 60
+
+    return String.format("%02d:%02d", hours, minutes)
+}
+
+
+
 
 
 @Composable
