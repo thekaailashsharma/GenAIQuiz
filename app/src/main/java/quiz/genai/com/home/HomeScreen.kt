@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
@@ -51,7 +52,8 @@ import quiz.genai.com.utils.ProfileImage
 fun HomeScreen(
     time: Long,
     timeTracker: TimeTracker,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navController: NavController
 ) {
     val state = rememberCollapsingToolbarScaffoldState()
     val progress = state.toolbarState.progress
@@ -158,7 +160,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            CoursesChips()
+            CoursesChips(navController = navController)
 
             Spacer(modifier = Modifier.height(25.dp))
 
@@ -172,7 +174,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            CoursesChips()
+            CoursesChips(navController = navController)
 
             LearningGoalsSection(timeTracker = timeTracker, totalTime = time)
 

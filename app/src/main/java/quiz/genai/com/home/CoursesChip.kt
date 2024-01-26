@@ -42,7 +42,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import quiz.genai.com.R
+import quiz.genai.com.navController.Screens
 import quiz.genai.com.ui.theme.indigo
 import quiz.genai.com.ui.theme.monteEB
 import quiz.genai.com.ui.theme.orange
@@ -136,21 +138,21 @@ val dummyCourses = listOf(
 )
 
 @Composable
-fun CoursesChips() {
+fun CoursesChips(navController: NavController) {
     LazyRow() {
         items(dummyCourses) { index ->
-            CourseChip(course = index)
+            CourseChip(course = index, navController = navController)
         }
     }
 }
 
 @Composable
-fun CourseChip(course: Course) {
-    CourseCard(course = course)
+fun CourseChip(course: Course, navController: NavController) {
+    CourseCard(course = course, navController)
 }
 
 @Composable
-fun CourseCard(course: Course) {
+fun CourseCard(course: Course, navController: NavController) {
     var isBookMarked by remember {
         mutableStateOf(false)
     }
@@ -159,7 +161,13 @@ fun CourseCard(course: Course) {
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .padding(5.dp)
-            .height(200.dp),
+            .height(200.dp)
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null,
+            ) {
+                navController.navigate(Screens.CourseDetails.route)
+            },
         colors = CardDefaults.cardColors(
             containerColor = course.color,
             contentColor = Color.White

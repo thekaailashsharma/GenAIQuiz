@@ -45,6 +45,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import quiz.genai.com.dto.quiz.Quiz
 import quiz.genai.com.dto.quiz.QuizOption
+import quiz.genai.com.ui.theme.backGround
+import quiz.genai.com.ui.theme.monte
+import quiz.genai.com.ui.theme.monteEB
+import quiz.genai.com.ui.theme.orange
+import quiz.genai.com.ui.theme.yellow
 import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -65,7 +70,8 @@ fun QuizScreen(viewModel: QuizViewModel, quiz: Quiz) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .background(backGround),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -124,6 +130,7 @@ fun QuizScreen(viewModel: QuizViewModel, quiz: Quiz) {
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth(),
+                fontFamily = monte,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -134,53 +141,22 @@ fun QuizScreen(viewModel: QuizViewModel, quiz: Quiz) {
                 OptionsList(currentQuestion.options, currentQuestion.correctOption)
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
             Text(
                 text = currentQuestion.explanation,
-                color = Color(0xFF00BCD4),
+                color = Color(0xFF7BE67F),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(8.dp),
+                fontFamily = monte,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = {
-                        // Handle skip button click
-                        // You can implement skip logic or navigate to the next question
-                        // based on your requirements.
-                    },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
-                ) {
-                    Text(text = "Skip", color = Color.White)
-                }
-
-                Button(
-                    onClick = {
-                        // Handle next button click
-                        // You can implement logic to navigate to the next question
-                        // or submit the quiz based on your requirements.
-                    },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(1f)
-                ) {
-                    Text(text = "Next", color = Color.White)
-                }
-            }
         }
     }
 }
@@ -204,7 +180,7 @@ fun DashedProgressBar(
         for (i in 0 until totalDashes) {
             val dashColor = when {
                 i < currentPage -> Color(0xFF7BE67F)
-                i == currentPage -> Color(0xFFFC6178)
+                i == currentPage -> yellow
                 else -> Color.White
             }
 
@@ -253,7 +229,8 @@ fun OptionsList(options: List<QuizOption>, correctOption: Int) {
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        fontFamily = monte,
                     )
 
                     // Tick icon if this option is correct

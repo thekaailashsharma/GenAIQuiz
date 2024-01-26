@@ -133,6 +133,9 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    JobsBoardingScreen()
                     println(it)
+//                    ArticleScreen(it)
+//                    CourseDetails()
+//                    StackedCards()
                     NavController(
                         navHostController = navController,
                         paddingValues = it,

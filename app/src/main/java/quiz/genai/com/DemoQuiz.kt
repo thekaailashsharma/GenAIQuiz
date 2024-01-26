@@ -3,6 +3,7 @@ package quiz.genai.com
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -28,11 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import quiz.genai.com.ui.theme.backGround
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DemoQuiz(viewModel: QuizViewModel) {
-
+fun DemoQuiz(viewModel: QuizViewModel, paddingValues: PaddingValues) {
     val quizState = viewModel.state.collectAsState()
     val quizTopic = viewModel.quizTopic.collectAsState()
     val quizLevel = viewModel.quizLevel.collectAsState()
@@ -40,9 +41,9 @@ fun DemoQuiz(viewModel: QuizViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(backGround)
+            .padding(bottom = paddingValues.calculateBottomPadding() + 10.dp)
     ) {
-
         when (quizState.value) {
             is QuizState.Loading -> {
                 Column(
@@ -56,7 +57,7 @@ fun DemoQuiz(viewModel: QuizViewModel) {
 
             is QuizState.Error -> {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().background(backGround),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
