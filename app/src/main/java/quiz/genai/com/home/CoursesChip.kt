@@ -46,11 +46,13 @@ import androidx.navigation.NavController
 import quiz.genai.com.R
 import quiz.genai.com.navController.Screens
 import quiz.genai.com.ui.theme.indigo
+import quiz.genai.com.ui.theme.lightGray
 import quiz.genai.com.ui.theme.monteEB
 import quiz.genai.com.ui.theme.orange
 import quiz.genai.com.ui.theme.textColor
 import quiz.genai.com.ui.theme.yellow
 import quiz.genai.com.utils.ProfileImage
+import kotlin.random.Random
 
 data class Course(
     val title: String,
@@ -59,6 +61,8 @@ data class Course(
     val rating: Float,
     val durationInHours: Int,
     val color: Color = yellow,
+    val isPoweredBy: Boolean = Random.nextBoolean(),
+    val companyName : String = arrayOf("Cognavi", "GenAI", "Google", "Facebook", "Amazon", "Microsoft").random()
 )
 
 val dummyCourses = listOf(
@@ -140,7 +144,9 @@ val dummyCourses = listOf(
 @Composable
 fun CoursesChips(navController: NavController) {
     LazyRow() {
-        items(dummyCourses) { index ->
+        items(dummyCourses.sortedByDescending {
+            it.isPoweredBy
+        }) { index ->
             CourseChip(course = index, navController = navController)
         }
     }
@@ -161,7 +167,7 @@ fun CourseCard(course: Course, navController: NavController) {
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .padding(5.dp)
-            .height(200.dp)
+            .height(220.dp)
             .clickable(
                 interactionSource = MutableInteractionSource(),
                 indication = null,
@@ -185,7 +191,7 @@ fun CourseCard(course: Course, navController: NavController) {
                         interactionSource = MutableInteractionSource(),
                         indication = null,
                     ) {
-                      isBookMarked = !isBookMarked
+                        isBookMarked = !isBookMarked
                     },
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
@@ -209,15 +215,54 @@ fun CourseCard(course: Course, navController: NavController) {
                     painter = painterResource(id = course.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(130.dp)
+                        .size(120.dp)
                         .align(Alignment.BottomEnd)
-                        .clip(RoundedCornerShape(10.dp)),
+                        .clip(RoundedCornerShape(10.dp))
+                        .offset(y = (-15).dp),
                     contentScale = ContentScale.Crop,
                     colorFilter = ColorFilter.tint(
                         Color.Black.copy(alpha = 0.9f)
                     )
                 )
             }
+
+//            Box(
+//                modifier = Modifier.fillMaxSize(),
+//                contentAlignment = Alignment.BottomEnd
+//            ) {
+            if (course.isPoweredBy) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                        .align(Alignment.BottomEnd)
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .padding(horizontal = 10.dp)
+                ) {
+                    Text(
+                        text = "Brought to",
+                        color = lightGray.copy(0.45f),
+                        fontFamily = monteEB,
+                        fontSize = 6.sp,
+                        modifier = Modifier.padding(end = 3.dp)
+                    )
+                    Text(
+                        text = "you by",
+                        color = lightGray.copy(0.45f),
+                        fontFamily = monteEB,
+                        fontSize = 6.sp,
+                        modifier = Modifier.padding(end = 3.dp)
+                    )
+                    Text(
+                        text = course.companyName,
+                        color = lightGray.copy(0.75f),
+                        fontFamily = monteEB,
+                        fontSize = 9.sp,
+                        modifier = Modifier.padding(end = 3.dp)
+                    )
+                }
+            }
+
+//            }
 
 
 
@@ -312,5 +357,7 @@ fun CourseCard(course: Course, navController: NavController) {
         }
     }
 }
+
+
 
 
