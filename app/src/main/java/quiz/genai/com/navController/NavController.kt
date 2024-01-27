@@ -12,6 +12,7 @@ import quiz.genai.com.ArticleScreen
 import quiz.genai.com.CourseDetails
 import quiz.genai.com.DemoQuiz
 import quiz.genai.com.JobsBoardingScreen
+import quiz.genai.com.JobsDetailScreen
 import quiz.genai.com.QuizViewModel
 import quiz.genai.com.appUsage.TimeTracker
 import quiz.genai.com.home.HomeScreen
@@ -28,7 +29,7 @@ fun NavController(
     val viewModel = hiltViewModel<QuizViewModel>()
     NavHost(
         navController = navHostController,
-        startDestination = Screens.HomeScreen.route
+        startDestination = Screens.Jobs.route
     ) {
         composable(Screens.HomeScreen.route) {
             HomeScreen(time = time, timeTracker = timeTracker, paddingValues, navHostController)
@@ -38,7 +39,7 @@ fun NavController(
         }
 
         composable(Screens.Jobs.route) {
-            JobsBoardingScreen(paddingValues)
+            JobsBoardingScreen(paddingValues, navHostController)
         }
 
         composable(Screens.ArticleScreen.route) {
@@ -51,6 +52,10 @@ fun NavController(
 
         composable(Screens.QuizScreen.route) {
             DemoQuiz(viewModel = viewModel, paddingValues)
+        }
+
+        composable(Screens.JobsDetailScreen.route) {
+            JobsDetailScreen(paddingValues, navHostController)
         }
     }
 }

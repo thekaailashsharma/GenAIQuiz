@@ -50,7 +50,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.Job
+import quiz.genai.com.navController.Screens
 import quiz.genai.com.ui.theme.backGround
 import quiz.genai.com.ui.theme.indigo
 import quiz.genai.com.ui.theme.monte
@@ -93,7 +95,10 @@ val dummyCompanies = listOf(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun JobsBoardingScreen(paddingValues: PaddingValues) {
+fun JobsBoardingScreen(
+    paddingValues: PaddingValues,
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -241,7 +246,9 @@ fun JobsBoardingScreen(paddingValues: PaddingValues) {
                         )
                         Spacer(modifier = Modifier.size(25.dp))
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                navController.navigate(Screens.HomeScreen.route)
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Transparent,
                                 contentColor = Color.White
@@ -254,7 +261,7 @@ fun JobsBoardingScreen(paddingValues: PaddingValues) {
                             ) {
 
                                 Text(
-                                    text = "Find your next job",
+                                    text = "Let's Start",
                                     fontSize = 19.sp,
                                     fontFamily = monteEB,
                                     fontWeight = FontWeight.ExtraBold,
@@ -281,7 +288,7 @@ fun JobsBoardingScreen(paddingValues: PaddingValues) {
 
 
 @Composable
-private fun MarqueeCard(modifier: Modifier = Modifier) {
+fun MarqueeCard(modifier: Modifier = Modifier) {
     val company = remember {
         mutableStateOf(dummyCompanies[Random.nextInt(0, dummyCompanies.size - 1)])
     }
@@ -304,7 +311,7 @@ private fun MarqueeCard(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = company.value.logo),
                 contentDescription = company.value.name,
-                tint = Color(0xFF7D7E80).copy(alpha = 0.5f),
+                tint = Color(0xFFDBDCDF).copy(alpha = 0.5f),
                 modifier = Modifier
                     .align(Alignment.Center)
                     .size(80.dp)

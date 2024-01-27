@@ -14,13 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -34,6 +37,7 @@ import quiz.genai.com.home.dummyWeeklyGoals
 import quiz.genai.com.home.isDayOfWeekAfterToday
 import quiz.genai.com.home.isGoalAchieved
 import quiz.genai.com.home.isToday
+import quiz.genai.com.toPx
 import quiz.genai.com.ui.theme.monte
 import quiz.genai.com.ui.theme.monteEB
 import quiz.genai.com.ui.theme.textColor
@@ -151,9 +155,6 @@ fun millisToMinutesSeconds(millis: Long): String {
 }
 
 
-
-
-
 @Composable
 fun Progress(modifier: Modifier = Modifier) {
     Row(
@@ -223,7 +224,7 @@ fun Progress(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Circle(
+fun Circle(
     isToday: Boolean = false,
     isGoalAchieved: Boolean,
     modifier: Modifier,
@@ -246,13 +247,53 @@ private fun Circle(
 }
 
 @Composable
-private fun Line(modifier: Modifier, isGoalAchieved: Boolean = false) {
+fun JobsCircle(
+    isToday: Boolean = false,
+    isGoalAchieved: Boolean,
+    modifier: Modifier,
+    content: @Composable (BoxScope.() -> Unit) = { },
+) {
+    Box(
+        modifier = modifier
+            .then(
+                if (isGoalAchieved) Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color(0xFF2C00C7)) else Modifier
+            )
+            .drawBehind {
+                drawRoundRect(
+                    color =
+                    Color(0xFFD5D5D5),
+                    style = Stroke(2.dp.toPx()),
+                    cornerRadius = CornerRadius(10.dp.toPx(), 10.dp.toPx())
+                )
+            },
+        contentAlignment = Alignment.Center,
+        content = content
+    )
+}
+
+
+@Composable
+fun Line(modifier: Modifier, isGoalAchieved: Boolean = false) {
     Canvas(modifier = modifier) {
         drawLine(
             color = if (isGoalAchieved) Color(0xFF119E78) else Color.Transparent,
             start = Offset.Zero,
             end = Offset(size.width, 0f),
             strokeWidth = 1.dp.toPx()
+        )
+    }
+}
+
+@Composable
+fun JobsLine(modifier: Modifier, isGoalAchieved: Boolean = false) {
+    Canvas(modifier = modifier.offset(x = (0).dp)) {
+        drawLine(
+            color = Color(0xFFD5D5D5),
+            start = Offset(0f, 0f),
+            end = Offset(58f, 0f),
+            strokeWidth = 3.dp.toPx()
         )
     }
 }

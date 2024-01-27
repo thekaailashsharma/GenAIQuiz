@@ -16,7 +16,7 @@ sealed class BottomBarScreens(val route: String?, val title: String?, val icon: 
         BottomBarScreens(Screens.Profile.route, "Community", Icons.Filled.Person)
 
     object Jobs :
-        BottomBarScreens(Screens.Jobs.route, "Jobs", Icons.Filled.Work)
+        BottomBarScreens(Screens.JobsDetailScreen.route, "Jobs", Icons.Filled.Work)
 }
 
 val items = listOf(
